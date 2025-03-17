@@ -2,14 +2,16 @@
 import Category from "@/components/Category";
 import Top from "@/components/Top";
 import Footer from "@/components/Footer";
-import { ChakraProvider } from "@chakra-ui/react";
+import JobList from "@/components/JobList";
+import { Box } from "@chakra-ui/react";
 
 export default function Home() {
   return (
-    <ChakraProvider>
+    <Box>
       <Top />
       <Category />
+      <JobList />
       <Footer />
-    </ChakraProvider>
+    </Box>
   );
 }

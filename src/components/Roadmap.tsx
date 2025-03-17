@@ -8,39 +8,54 @@ import {
   Text,
   VStack,
   Spinner,
+  Code,
 } from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
+import { apiClient } from "@/lib/api";
 
 interface Choice {
   id: number;
   text: string;
 }
 
-export default function Roadmap() {
+interface RoadmapProps {
+  jobId: string; // jobUuidと同じだが、互換性のためにjobIdという名前を維持
+}
+
+export default function Roadmap({ jobId }: RoadmapProps) {
   const questions: Choice[] = [
-    { id: 1, text: "最新のテクノロジートレンドは？" },
-    { id: 2, text: "業界の動向について" },
-    { id: 3, text: "キャリアアップの方法は？" },
+    { id: 1, text: "必要なスキルは？" },
+    { id: 2, text: "習得の方法は？" },
+    { id: 3, text: "キャリアパスについて" },
   ];
 
   const [selectedQuestion, setSelectedQuestion] = useState<Choice | null>(null);
-  const [answer, setAnswer] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
   const [showQuestions, setShowQuestions] = useState<boolean>(true);
 
-  const handleQuestionClick = (question: Choice) => {
-    setSelectedQuestion(question);
-    setAnswer("");
-    setShowQuestions(false);
-    setLoading(true);
+  // ロードマップ取得クエリ
+  const {
+    data: roadmapData,
+    isLoading,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["roadmap", jobId, selectedQuestion?.id],
+    queryFn: () => apiClient.generateRoadmap(jobId),
+    enabled: !!jobId && !!selectedQuestion, // 質問選択時のみ実行
+  });
 
-    // 疑似的なネットワークリクエストをシミュレーション
-    setTimeout(() => {
-      const simulatedAnswer = `回答: ${question.text} に関する情報をこちらに表示します。`;
-      setAnswer(simulatedAnswer);
-      setLoading(false);
+  const handleQuestionClick = async (question: Choice) => {
+    setSelectedQuestion(question);
+    setShowQuestions(false);
+    
+    try {
+      await refetch();
       // レスポンスが返ってきたら再び質問リストを表示
       setShowQuestions(true);
-    }, 800);
+    } catch (err) {
+      console.error("ロードマップ取得エラー:", err);
+      setShowQuestions(true);
+    }
   };
 
   return (
@@ -52,7 +67,7 @@ export default function Roadmap() {
       bg="white"
     >
       <Heading as="h3" size="md" mb={4}>
-        関連する質問
+        キャリアロードマップ
       </Heading>
 
       {/* 回答エリア */}
@@ -63,14 +78,47 @@ export default function Roadmap() {
         border="1px solid"
         borderColor="gray.200"
         mb={4}
+        minHeight="200px"
+        maxHeight="400px"
+        overflowY="auto"
       >
-        {loading ? (
-          <Flex align="center">
+        {isLoading ? (
+          <Flex align="center" justify="center" height="100%">
             <Spinner size="sm" mr={2} />
-            <Text>回答中…</Text>
+            <Text>ロードマップを生成中...</Text>
           </Flex>
+        ) : error ? (
+          <Text color="red.500">
+            エラーが発生しました: {(error as Error).message}
+          </Text>
+        ) : roadmapData ? (
+          <Box>
+            <Text fontWeight="bold" mb={2}>
+              {roadmapData.job_title}
+            </Text>
+            <Text fontSize="sm" color="gray.600" mb={3}>
+              勤務地: {roadmapData.location}
+            </Text>
+            <Box
+              whiteSpace="pre-line"
+              fontSize="sm"
+              sx={{
+                'h1, h2, h3': {
+                  fontWeight: 'bold',
+                  marginTop: '1rem',
+                  marginBottom: '0.5rem'
+                },
+                'ul, ol': {
+                  paddingLeft: '1.5rem',
+                  marginBottom: '1rem'
+                }
+              }}
+            >
+              {roadmapData.roadmap}
+            </Box>
+          </Box>
         ) : (
-          <Text>{answer || "質問を選択してください"}</Text>
+          <Text>質問を選択すると、この求人に関連するキャリアロードマップが表示されます</Text>
         )}
       </Box>
 
@@ -81,12 +129,8 @@ export default function Roadmap() {
             <Button
               key={question.id}
               onClick={() => handleQuestionClick(question)}
-              colorScheme={
-                selectedQuestion?.id === question.id ? "red" : "gray"
-              }
-              variant={
-                selectedQuestion?.id === question.id ? "solid" : "outline"
-              }
+              colorScheme={selectedQuestion?.id === question.id ? "red" : "gray"}
+              variant={selectedQuestion?.id === question.id ? "solid" : "outline"}
             >
               {question.text}
             </Button>
