@@ -33,7 +33,7 @@ export interface Company {
 export interface JobPosting {
   uuid: string;
   company_id: number;
-  company?: Company;  // 会社情報（オプショナル）
+  company?: Company;
   title: string;
   description: string;
   requirements: string;
@@ -48,9 +48,9 @@ export interface RoadmapResponse {
   job_title: string;
   location: string;
   roadmap: string;
+  question_type?: string;
 }
 
-// API関数
 export const apiClient = {
   // 全ての求人情報を取得
   getAllJobs: async (includeCompany: boolean = false): Promise<JobPosting[]> => {
@@ -135,9 +135,9 @@ export const apiClient = {
     await api.post(`/jobs/${uuid}/positions`, positionIds);
   },
 
-  // ロードマップを生成
-  generateRoadmap: async (uuid: string): Promise<RoadmapResponse> => {
-    const response = await api.get<RoadmapResponse>(`/jobs/${uuid}/roadmap`);
+  // ロードマップを生成（質問タイプに対応）
+  generateRoadmap: async (uuid: string, questionType: string = 'general'): Promise<RoadmapResponse> => {
+    const response = await api.get<RoadmapResponse>(`/jobs/${uuid}/roadmap?question_type=${questionType}`);
     return response.data;
   }
 };

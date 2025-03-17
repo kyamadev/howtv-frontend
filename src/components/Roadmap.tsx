@@ -8,7 +8,7 @@ import {
   Text,
   VStack,
   Spinner,
-  Code,
+  Badge,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { apiClient } from "@/lib/api";
@@ -16,17 +16,19 @@ import { apiClient } from "@/lib/api";
 interface Choice {
   id: number;
   text: string;
+  questionType: string;
 }
 
 interface RoadmapProps {
-  jobId: string; // jobUuidと同じだが、互換性のためにjobIdという名前を維持
+  jobId: string;
 }
 
 export default function Roadmap({ jobId }: RoadmapProps) {
+  // 質問リストを質問タイプと関連付ける
   const questions: Choice[] = [
-    { id: 1, text: "必要なスキルは？" },
-    { id: 2, text: "習得の方法は？" },
-    { id: 3, text: "キャリアパスについて" },
+    { id: 1, text: "必要なスキルは？", questionType: "skills" },
+    { id: 2, text: "習得の方法は？", questionType: "learning" },
+    { id: 3, text: "キャリアパスについて", questionType: "career" },
   ];
 
   const [selectedQuestion, setSelectedQuestion] = useState<Choice | null>(null);
@@ -39,8 +41,8 @@ export default function Roadmap({ jobId }: RoadmapProps) {
     error,
     refetch,
   } = useQuery({
-    queryKey: ["roadmap", jobId, selectedQuestion?.id],
-    queryFn: () => apiClient.generateRoadmap(jobId),
+    queryKey: ["roadmap", jobId, selectedQuestion?.questionType],
+    queryFn: () => apiClient.generateRoadmap(jobId, selectedQuestion?.questionType),
     enabled: !!jobId && !!selectedQuestion, // 質問選択時のみ実行
   });
 
@@ -93,9 +95,16 @@ export default function Roadmap({ jobId }: RoadmapProps) {
           </Text>
         ) : roadmapData ? (
           <Box>
-            <Text fontWeight="bold" mb={2}>
-              {roadmapData.job_title}
-            </Text>
+            <Flex alignItems="center" mb={2}>
+              <Text fontWeight="bold" mr={2}>
+                {roadmapData.job_title}
+              </Text>
+              {selectedQuestion && (
+                <Badge colorScheme="blue" borderRadius="full">
+                  {selectedQuestion.text}
+                </Badge>
+              )}
+            </Flex>
             <Text fontSize="sm" color="gray.600" mb={3}>
               勤務地: {roadmapData.location}
             </Text>
@@ -131,6 +140,7 @@ export default function Roadmap({ jobId }: RoadmapProps) {
               onClick={() => handleQuestionClick(question)}
               colorScheme={selectedQuestion?.id === question.id ? "red" : "gray"}
               variant={selectedQuestion?.id === question.id ? "solid" : "outline"}
+              isDisabled={isLoading}
             >
               {question.text}
             </Button>
