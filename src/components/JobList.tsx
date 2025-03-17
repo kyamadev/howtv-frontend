@@ -71,7 +71,7 @@ const JobCard = ({ job }: { job: JobPosting }) => {
 export default function JobList() {
   const { data: jobs, isLoading, error } = useQuery({
     queryKey: ["jobs"],
-    queryFn: apiClient.getAllJobs,
+    queryFn: () => apiClient.getAllJobs(),
   });
 
   if (isLoading) {

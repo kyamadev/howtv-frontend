@@ -83,7 +83,7 @@ export default function Category() {
   // 全ての求人を取得して各ポジションの求人数をカウント
   const { data: jobs } = useQuery({
     queryKey: ["jobs"],
-    queryFn: apiClient.getAllJobs,
+    queryFn: () => apiClient.getAllJobs(),
   });
 
   // ポジションごとの求人数をカウント

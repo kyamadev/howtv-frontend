@@ -38,7 +38,7 @@ export default function SearchResults() {
   // すべての求人を取得
   const { data: jobs, isLoading, error } = useQuery({
     queryKey: ["jobs"],
-    queryFn: apiClient.getAllJobs,
+    queryFn: () => apiClient.getAllJobs(),
   });
 
   // 検索条件に基づいて求人をフィルタリング

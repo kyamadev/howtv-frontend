@@ -39,7 +39,7 @@ const SearchModal = () => {
   // 求人データから勤務地を抽出（実際のAPIにエンドポイントがあればそちらを使用）
   const { data: jobs, isLoading: jobsLoading } = useQuery({
     queryKey: ["jobs"],
-    queryFn: apiClient.getAllJobs,
+    queryFn: () => apiClient.getAllJobs(),
   });
 
   // 勤務地の一覧を抽出
