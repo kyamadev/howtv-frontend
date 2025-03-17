@@ -1,7 +1,7 @@
 import React from "react";
 import { Flex, Box, Heading } from "@chakra-ui/react";
-import Chat from "@/components/Chat";
 import CompanyDetail from "@/components/CompanyDetail";
+import Roadmap from "@/components/Roadmap";
 
 const Page: React.FC = () => {
   return (
@@ -11,7 +11,7 @@ const Page: React.FC = () => {
           チャット機能
         </Heading>
         <Box>
-          <Chat />
+          <Roadmap />
         </Box>
       </Box>
       <Box flex="2" p="1rem">
