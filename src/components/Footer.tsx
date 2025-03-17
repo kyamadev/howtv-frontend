@@ -99,7 +99,6 @@ export default function Footer() {
         >
           <Stack gap={8}>
             <Box>
-              {/* ロゴコンポーネントまたはイメージに置き換えてください */}
               <Text
                 fontSize="2xl"
                 fontWeight="bold"
@@ -114,7 +113,7 @@ export default function Footer() {
               <br />
               最新の求人情報を提供し、あなたのキャリアをサポートします。
             </Text>
-            <HStack gap={4}>
+            {/* <HStack gap={4}>
               <SocialButton href={"#"}>
                 <FaTwitter />
               </SocialButton>
@@ -127,10 +126,10 @@ export default function Footer() {
               <SocialButton href={"#"}>
                 <FaLinkedin />
               </SocialButton>
-            </HStack>
+            </HStack> */}
           </Stack>
 
-          <VStack align="flex-start" gap={4}>
+          {/* <VStack align="flex-start" gap={4}>
             <ListHeader>求人情報</ListHeader>
             <Link
               href={"#"}
@@ -169,9 +168,9 @@ export default function Footer() {
             >
               スキルから探す
             </Link>
-          </VStack>
+          </VStack> */}
 
-          <VStack align="flex-start" gap={4}>
+          {/* <VStack align="flex-start" gap={4}>
             <ListHeader>企業情報</ListHeader>
             <Link
               href={"#"}
@@ -208,9 +207,9 @@ export default function Footer() {
             >
               お問い合わせ
             </Link>
-          </VStack>
+          </VStack> */}
 
-          <VStack align="flex-start" gap={6}>
+          {/* <VStack align="flex-start" gap={6}>
             <ListHeader>最新情報を受け取る</ListHeader>
             <Text fontSize="sm" color="gray.600" lineHeight="taller">
               業界の最新ニュースと求人情報をメールでお届けします
@@ -246,7 +245,7 @@ export default function Footer() {
                 登録
               </Button>
             </Stack>
-          </VStack>
+          </VStack> */}
         </SimpleGrid>
       </Container>
 
@@ -264,7 +263,7 @@ export default function Footer() {
             <Text fontSize="sm" color="gray.500" mb={{ base: 4, md: 0 }}>
               © 2025 HowTV. All rights reserved
             </Text>
-            <HStack
+            {/* <HStack
               gap={{ base: 2, sm: 6 }}
               justifyContent={{ base: "center", md: "flex-end" }}
               flexWrap="wrap"
@@ -301,7 +300,7 @@ export default function Footer() {
               >
                 Cookieポリシー
               </Link>
-            </HStack>
+            </HStack> */}
           </Flex>
         </Container>
       </Box>

@@ -1,5 +1,6 @@
+"use client";
 import React from "react";
-import { Box, SimpleGrid, Flex, Text, Icon } from "@chakra-ui/react";
+import { Box, SimpleGrid, Flex, Text, Icon, Spinner, Center } from "@chakra-ui/react";
 import {
   FaBriefcase,
   FaCode,
@@ -10,6 +11,8 @@ import {
   FaServer,
   FaMobileAlt,
 } from "react-icons/fa";
+import { useQuery } from "@tanstack/react-query";
+import { apiClient, Position } from "@/lib/api";
 
 type CategoryItemProps = {
   icon: React.ElementType;
@@ -48,18 +51,97 @@ const CategoryItem = ({ icon, title, count }: CategoryItemProps) => {
   );
 };
 
-export default function Category() {
-  const categories = [
-    { icon: FaBriefcase, title: "Marketing", count: 258 },
-    { icon: FaCode, title: "Development", count: 632 },
-    { icon: FaChartBar, title: "Data Science", count: 324 },
-    { icon: FaPalette, title: "Design", count: 158 },
-    { icon: FaBullhorn, title: "Sales", count: 194 },
-    { icon: FaBookOpen, title: "Education", count: 105 },
-    { icon: FaServer, title: "IT & Networking", count: 267 },
-    { icon: FaMobileAlt, title: "Mobile App", count: 186 },
-  ];
+// アイコンとカテゴリのマッピング
+const positionIconMap: Record<string, React.ElementType> = {
+  "フロントエンドエンジニア": FaCode,
+  "バックエンドエンジニア": FaServer,
+  "フルスタックエンジニア": FaCode,
+  "モバイルエンジニア": FaMobileAlt,
+  "インフラエンジニア": FaServer,
+  "データエンジニア": FaChartBar,
+  "AI/ML エンジニア": FaChartBar,
+  "DevOpsエンジニア": FaServer,
+  "セキュリティエンジニア": FaServer,
+  "QAエンジニア": FaBookOpen,
+  "Marketing": FaBullhorn,
+  "Development": FaCode,
+  "Data Science": FaChartBar,
+  "Design": FaPalette,
+  "Sales": FaBullhorn,
+  "Education": FaBookOpen,
+  "IT & Networking": FaServer,
+  "Mobile App": FaMobileAlt,
+};
 
+export default function Category() {
+  // APIから職種データを取得
+  const { data: positions, isLoading, error } = useQuery({
+    queryKey: ["positions"],
+    queryFn: apiClient.getAllPositions,
+  });
+
+  // 全ての求人を取得して各ポジションの求人数をカウント
+  const { data: jobs } = useQuery({
+    queryKey: ["jobs"],
+    queryFn: () => apiClient.getAllJobs(),
+  });
+
+  // ポジションごとの求人数をカウント
+  const getPositionCount = (positionId: number) => {
+    if (!jobs) return 0;
+    return jobs.filter(job => 
+      job.positions.some(pos => pos.id === positionId)
+    ).length;
+  };
+
+  // エラー表示
+  if (error) {
+    return (
+      <Box py={10} px={4} textAlign="center">
+        <Text color="red.500">エラーが発生しました: {(error as Error).message}</Text>
+      </Box>
+    );
+  }
+
+  // ローディング表示
+  if (isLoading) {
+    return (
+      <Box py={10} px={4} textAlign="center">
+        <Center>
+          <Spinner size="xl" color="#7B66FF" thickness="4px" />
+        </Center>
+      </Box>
+    );
+  }
+
+  // データがない場合のフォールバック
+  if (!positions || positions.length === 0) {
+    const fallbackCategories = [
+      { icon: FaBriefcase, title: "Marketing", count: 258 },
+      { icon: FaCode, title: "Development", count: 632 },
+      { icon: FaChartBar, title: "Data Science", count: 324 },
+      { icon: FaPalette, title: "Design", count: 158 },
+      { icon: FaBullhorn, title: "Sales", count: 194 },
+      { icon: FaBookOpen, title: "Education", count: 105 },
+      { icon: FaServer, title: "IT & Networking", count: 267 },
+      { icon: FaMobileAlt, title: "Mobile App", count: 186 },
+    ];
+
+    return renderCategorySection(fallbackCategories);
+  }
+
+  // ポジションデータをカテゴリアイテムに変換
+  const categories = positions.map((position: Position) => ({
+    icon: positionIconMap[position.name] || FaBriefcase,
+    title: position.name,
+    count: getPositionCount(position.id)
+  }));
+
+  return renderCategorySection(categories);
+}
+
+// カテゴリセクションのレンダリング
+function renderCategorySection(categories: { icon: React.ElementType; title: string; count: number }[]) {
   return (
     <Box py={10} px={4}>
       <Box textAlign="center" mb={10}>

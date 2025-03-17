@@ -1,5 +1,6 @@
 "use client";
 import { ChakraProvider } from "@chakra-ui/react";
+import QueryProvider from "@/lib/QueryProvider";
 
 export default function RootLayout({
   children,
@@ -9,7 +10,9 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body>
-        <ChakraProvider>{children}</ChakraProvider>
+        <QueryProvider>
+          <ChakraProvider>{children}</ChakraProvider>
+        </QueryProvider>
       </body>
     </html>
   );
