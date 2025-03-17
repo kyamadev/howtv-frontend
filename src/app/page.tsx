@@ -11,7 +11,7 @@ export default function Home() {
     <ChakraProvider value={defaultSystem}>
       <Top />
       <Category />
-      <Recruitbar />
+      {/* <Recruitbar /> */}
       <Footer />
     </ChakraProvider>
   );
