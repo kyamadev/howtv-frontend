@@ -40,7 +40,7 @@ export function Header() {
       </Flex>
 
       {/* ログインボタン */}
-      <Button
+      {/* <Button
         bg="#FF4500" // オレンジっぽい赤色
         color="white"
         _hover={{ bg: "#E23E00" }} // ホバー時は少し暗く
@@ -48,7 +48,7 @@ export function Header() {
         px={6}
       >
         ログイン
-      </Button>
+      </Button> */}
     </Flex>
   );
 }
