@@ -14,6 +14,7 @@ import {
 import { FaSearch } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { Header } from "./Header";
+import SearchModal from "./SearchModal";
 
 export default function Top() {
   const router = useRouter();
@@ -72,59 +73,7 @@ export default function Top() {
               新たなキャリアへの第一歩を踏み出しましょう。
             </Text>
 
-            {/* 検索ボックス */}
-            <Box
-              bg="white"
-              p={4}
-              borderRadius="xl"
-              boxShadow="md"
-              width="100%"
-              maxW="500px"
-              mt={8}
-            >
-              <Flex direction={{ base: "column", sm: "row" }} gap={3}>
-                <InputGroup flex={1}>
-                  <Box position="relative">
-                    <Box
-                      position="absolute"
-                      left="16px"
-                      top="50%"
-                      transform="translateY(-50%)"
-                      zIndex={2}
-                      pointerEvents="none"
-                    >
-                      <Icon as={FaSearch} color="#FF4500" />{" "}
-                      {/* オレンジっぽい赤色 */}
-                    </Box>
-                    <Input
-                      size="lg"
-                      placeholder="スキルまたは職種を入力"
-                      pl="42px"
-                      borderRadius="md"
-                      borderColor="#E2E8F0"
-                      _focus={{
-                        borderColor: "#FF4500", // フォーカス時にオレンジっぽい赤色
-                        boxShadow: "0 0 0 1px #FF4500",
-                      }}
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                  </Box>
-                </InputGroup>
-
-                <Button
-                  bg="#FF4500" // オレンジっぽい赤色
-                  color="white"
-                  size="lg"
-                  px={8}
-                  _hover={{ bg: "#E23E00" }} // ホバー時は少し暗く
-                  w={{ base: "100%", sm: "auto" }}
-                  onClick={handleSearch}
-                >
-                  検索
-                </Button>
-              </Flex>
-            </Box>
+            <SearchModal />
           </Box>
 
           {/* 右側：イラスト画像 */}
