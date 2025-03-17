@@ -1,8 +1,5 @@
-'use client'
-
-import Footer from '@/components/Footer'
-import { Header } from '@/components/Header'
-import { ChakraProvider, createSystem, defaultConfig } from '@chakra-ui/react'
+"use client";
+import { ChakraProvider, createSystem, defaultConfig } from "@chakra-ui/react";
 
 const system = createSystem(defaultConfig, {
   theme: {
@@ -13,22 +10,18 @@ const system = createSystem(defaultConfig, {
       },
     },
   },
-})
+});
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="ja">
       <body>
-        <ChakraProvider value={system}>
-          <Header />
-          {children}
-          <Footer />
-        </ChakraProvider>
+        <ChakraProvider value={system}>{children}</ChakraProvider>
       </body>
     </html>
-  )
+  );
 }
