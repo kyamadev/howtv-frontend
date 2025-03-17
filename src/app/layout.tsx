@@ -1,16 +1,5 @@
 "use client";
-import { ChakraProvider, createSystem, defaultConfig } from "@chakra-ui/react";
-
-const system = createSystem(defaultConfig, {
-  theme: {
-    tokens: {
-      fonts: {
-        heading: { value: "var(--font-bricolage)" },
-        body: { value: "var(--font-bricolage)" },
-      },
-    },
-  },
-});
+import { ChakraProvider } from "@chakra-ui/react";
 
 export default function RootLayout({
   children,
@@ -20,7 +9,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body>
-        <ChakraProvider value={system}>{children}</ChakraProvider>
+        <ChakraProvider>{children}</ChakraProvider>
       </body>
     </html>
   );
