@@ -27,7 +27,7 @@ export function Header() {
       </Box>
 
       {/* メニューリンク - 必要に応じて追加 */}
-      <Flex gap={8} display={{ base: "none", md: "flex" }}>
+      {/* <Flex gap={8} display={{ base: "none", md: "flex" }}>
         <Text fontWeight="500" cursor="pointer" _hover={{ color: "#FF4500" }}>
           求人を探す
         </Text>
@@ -37,7 +37,7 @@ export function Header() {
         <Text fontWeight="500" cursor="pointer" _hover={{ color: "#FF4500" }}>
           企業を見る
         </Text>
-      </Flex>
+      </Flex> */}
 
       {/* ログインボタン */}
       {/* <Button
