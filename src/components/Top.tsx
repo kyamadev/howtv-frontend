@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -7,18 +7,17 @@ import {
   Heading,
   Input,
   Text,
-  Stack,
   Image,
   InputGroup,
   Icon,
-} from '@chakra-ui/react';
-import { FaSearch } from 'react-icons/fa';
-import { useRouter } from 'next/navigation';
-import { Header } from './Header';
+} from "@chakra-ui/react";
+import { FaSearch } from "react-icons/fa";
+import { useRouter } from "next/navigation";
+import { Header } from "./Header";
 
 export default function Top() {
   const router = useRouter();
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = () => {
     router.push(`/results?q=${searchQuery}`);
@@ -27,7 +26,7 @@ export default function Top() {
   return (
     <Box
       as="section"
-      bg="white"  // 背景色を白に変更
+      bg="white" // 背景色を白に変更
       minHeight="80vh"
       py={12}
     >
@@ -37,30 +36,38 @@ export default function Top() {
 
         {/* メインコンテンツ */}
         <Flex
-          direction={{ base: 'column', lg: 'row' }}
+          direction={{ base: "column", lg: "row" }}
           alignItems="center"
           justifyContent="space-between"
           gap={10}
         >
           {/* 左側：テキストと検索 */}
-          <Box
-            maxW={{ lg: '550px' }}
-          >
+          <Box maxW={{ lg: "550px" }}>
             <Heading
               as="h1"
               size="2xl"
               color="#0B2B82"
               lineHeight="1.2"
               fontWeight="800"
-              textAlign={{ base: 'center', lg: 'left' }}
+              textAlign={{ base: "center", lg: "left" }}
             >
               <Box as="span">あなたの</Box>
-              <Box as="span" color="#FF4500"> スキル </Box>  {/* オレンジっぽい赤色でハイライト */}
+              <Box as="span" color="#FF4500">
+                {" "}
+                スキル{" "}
+              </Box>{" "}
+              {/* オレンジっぽい赤色でハイライト */}
               <Box as="span">を活かせる</Box>
-              <Box as="span" display="block" mt={2}>最高の仕事を見つけよう</Box>
+              <Box as="span" display="block" mt={2}>
+                最高の仕事を見つけよう
+              </Box>
             </Heading>
 
-            <Text fontSize="lg" color="#3D589B" textAlign={{ base: 'center', lg: 'left' }}>
+            <Text
+              fontSize="lg"
+              color="#3D589B"
+              textAlign={{ base: "center", lg: "left" }}
+            >
               HowTVは、あなたの経験とスキルに合った最適な求人情報を提供します。
               新たなキャリアへの第一歩を踏み出しましょう。
             </Text>
@@ -75,14 +82,19 @@ export default function Top() {
               maxW="500px"
               mt={8}
             >
-              <Flex
-                direction={{ base: 'column', sm: 'row' }}
-                gap={3}
-              >
+              <Flex direction={{ base: "column", sm: "row" }} gap={3}>
                 <InputGroup flex={1}>
                   <Box position="relative">
-                    <Box position="absolute" left="16px" top="50%" transform="translateY(-50%)" zIndex={2} pointerEvents="none">
-                      <Icon as={FaSearch} color="#FF4500" />  {/* オレンジっぽい赤色 */}
+                    <Box
+                      position="absolute"
+                      left="16px"
+                      top="50%"
+                      transform="translateY(-50%)"
+                      zIndex={2}
+                      pointerEvents="none"
+                    >
+                      <Icon as={FaSearch} color="#FF4500" />{" "}
+                      {/* オレンジっぽい赤色 */}
                     </Box>
                     <Input
                       size="lg"
@@ -91,8 +103,8 @@ export default function Top() {
                       borderRadius="md"
                       borderColor="#E2E8F0"
                       _focus={{
-                        borderColor: "#FF4500",  // フォーカス時にオレンジっぽい赤色
-                        boxShadow: "0 0 0 1px #FF4500"
+                        borderColor: "#FF4500", // フォーカス時にオレンジっぽい赤色
+                        boxShadow: "0 0 0 1px #FF4500",
                       }}
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
@@ -101,12 +113,12 @@ export default function Top() {
                 </InputGroup>
 
                 <Button
-                  bg="#FF4500"  // オレンジっぽい赤色
+                  bg="#FF4500" // オレンジっぽい赤色
                   color="white"
                   size="lg"
                   px={8}
-                  _hover={{ bg: '#E23E00' }}  // ホバー時は少し暗く
-                  w={{ base: '100%', sm: 'auto' }}
+                  _hover={{ bg: "#E23E00" }} // ホバー時は少し暗く
+                  w={{ base: "100%", sm: "auto" }}
                   onClick={handleSearch}
                 >
                   検索
@@ -116,10 +128,7 @@ export default function Top() {
           </Box>
 
           {/* 右側：イラスト画像 */}
-          <Box
-            display={{ base: 'none', md: 'block' }}
-            position="relative"
-          >
+          <Box display={{ base: "none", md: "block" }} position="relative">
             <Image
               src="https://img.freepik.com/free-vector/recruitment-agency-searching-job-applicants_1262-19873.jpg"
               alt="就職活動のイラスト"
@@ -136,7 +145,7 @@ export default function Top() {
               width="140px"
               height="140px"
               borderRadius="full"
-              border="2px dashed #FF4500"  // オレンジっぽい赤色
+              border="2px dashed #FF4500" // オレンジっぽい赤色
               zIndex={-1}
             />
             <Box
@@ -146,7 +155,7 @@ export default function Top() {
               width="80px"
               height="80px"
               borderRadius="full"
-              bg="#FF4500"  // オレンジっぽい赤色
+              bg="#FF4500" // オレンジっぽい赤色
               opacity="0.1"
               zIndex={-1}
             />
