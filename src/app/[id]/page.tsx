@@ -8,16 +8,13 @@ const Page: React.FC = () => {
     <Flex height="100vh">
       <Box flex="1" borderRight="1px solid #ccc" p="1rem">
         <Heading as="h2" size="md" mb="4">
-          チャット機能
+          ロードマップ作成
         </Heading>
         <Box>
           <Roadmap />
         </Box>
       </Box>
       <Box flex="2" p="1rem">
-        <Heading as="h2" size="md" mb="4">
-          右側の画面
-        </Heading>
         <CompanyDetail />
       </Box>
     </Flex>
