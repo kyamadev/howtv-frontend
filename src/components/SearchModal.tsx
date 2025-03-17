@@ -12,6 +12,7 @@ import {
   CheckboxGroup,
   VStack,
 } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 
 const SearchModal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,6 +21,7 @@ const SearchModal = () => {
   );
   const [selectedSkillLevels, setSelectedSkillLevels] = useState<string[]>([]);
 
+  const router = useRouter();
   const jobCategories = ["エンジニア", "デザイナー", "マーケター"];
   const skillLevels = ["初心者", "中級者", "上級者"];
 
@@ -28,6 +30,7 @@ const SearchModal = () => {
       selectedJobCategories,
       selectedSkillLevels,
     });
+    router.push("/results");
     setIsOpen(false);
   };
 
