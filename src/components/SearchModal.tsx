@@ -75,7 +75,7 @@ const SearchModal = () => {
 
   return (
     <Box>
-      <Button
+      {/* <Button
         bg="#FF4500"
         color="white"
         size="lg"
@@ -84,7 +84,7 @@ const SearchModal = () => {
         onClick={() => setIsOpen(true)}
       >
         検索
-      </Button>
+      </Button> */}
 
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} size="lg">
         <ModalOverlay />
