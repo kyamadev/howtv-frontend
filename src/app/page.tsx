@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <Box>
       <Top />
-      <Category />
+      {/* <Category /> */}
       <JobList />
     </Box>
   );
