@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { apiClient } from "@/lib/api";
+import { useRouter } from "next/navigation";
 
 interface Choice {
   id: number;
@@ -29,6 +30,7 @@ export default function Roadmap({ jobId }: RoadmapProps) {
     { id: 3, text: "キャリアパスについて" },
   ];
 
+  const router = useRouter();
   const [selectedQuestion, setSelectedQuestion] = useState<Choice | null>(null);
   const [showQuestions, setShowQuestions] = useState<boolean>(true);
 
@@ -47,7 +49,7 @@ export default function Roadmap({ jobId }: RoadmapProps) {
   const handleQuestionClick = async (question: Choice) => {
     setSelectedQuestion(question);
     setShowQuestions(false);
-    
+
     try {
       await refetch();
       // レスポンスが返ってきたら再び質問リストを表示
@@ -103,22 +105,24 @@ export default function Roadmap({ jobId }: RoadmapProps) {
               whiteSpace="pre-line"
               fontSize="sm"
               sx={{
-                'h1, h2, h3': {
-                  fontWeight: 'bold',
-                  marginTop: '1rem',
-                  marginBottom: '0.5rem'
+                "h1, h2, h3": {
+                  fontWeight: "bold",
+                  marginTop: "1rem",
+                  marginBottom: "0.5rem",
                 },
-                'ul, ol': {
-                  paddingLeft: '1.5rem',
-                  marginBottom: '1rem'
-                }
+                "ul, ol": {
+                  paddingLeft: "1.5rem",
+                  marginBottom: "1rem",
+                },
               }}
             >
               {roadmapData.roadmap}
             </Box>
           </Box>
         ) : (
-          <Text>質問を選択すると、この求人に関連するキャリアロードマップが表示されます</Text>
+          <Text>
+            質問を選択すると、この求人に関連するキャリアロードマップが表示されます
+          </Text>
         )}
       </Box>
 
@@ -129,12 +133,22 @@ export default function Roadmap({ jobId }: RoadmapProps) {
             <Button
               key={question.id}
               onClick={() => handleQuestionClick(question)}
-              colorScheme={selectedQuestion?.id === question.id ? "red" : "gray"}
-              variant={selectedQuestion?.id === question.id ? "solid" : "outline"}
+              colorScheme={
+                selectedQuestion?.id === question.id ? "red" : "gray"
+              }
+              variant={
+                selectedQuestion?.id === question.id ? "solid" : "outline"
+              }
             >
               {question.text}
             </Button>
           ))}
+          <Button
+            colorScheme="red"
+            onClick={() => router.push(`/${jobId}/detail`)}
+          >
+            詳細を見る
+          </Button>
         </VStack>
       )}
     </Box>
