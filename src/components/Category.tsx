@@ -1,6 +1,14 @@
 "use client";
 import React from "react";
-import { Box, SimpleGrid, Flex, Text, Icon, Spinner, Center } from "@chakra-ui/react";
+import {
+  Box,
+  SimpleGrid,
+  Flex,
+  Text,
+  Icon,
+  Spinner,
+  Center,
+} from "@chakra-ui/react";
 import {
   FaBriefcase,
   FaCode,
@@ -39,7 +47,7 @@ const CategoryItem = ({ icon, title, count }: CategoryItemProps) => {
       }}
     >
       <Box p={4} borderRadius="full" bg="#F3F1FF" mb={4}>
-        <Icon as={icon} boxSize={8} color="#7B66FF" />
+        <Icon as={icon} boxSize={8} color="#ff4500" />
       </Box>
       <Text fontWeight="600" fontSize="lg" mb={2}>
         {title}
@@ -53,29 +61,33 @@ const CategoryItem = ({ icon, title, count }: CategoryItemProps) => {
 
 // アイコンとカテゴリのマッピング
 const positionIconMap: Record<string, React.ElementType> = {
-  "フロントエンドエンジニア": FaCode,
-  "バックエンドエンジニア": FaServer,
-  "フルスタックエンジニア": FaCode,
-  "モバイルエンジニア": FaMobileAlt,
-  "インフラエンジニア": FaServer,
-  "データエンジニア": FaChartBar,
+  フロントエンドエンジニア: FaCode,
+  バックエンドエンジニア: FaServer,
+  フルスタックエンジニア: FaCode,
+  モバイルエンジニア: FaMobileAlt,
+  インフラエンジニア: FaServer,
+  データエンジニア: FaChartBar,
   "AI/ML エンジニア": FaChartBar,
-  "DevOpsエンジニア": FaServer,
-  "セキュリティエンジニア": FaServer,
-  "QAエンジニア": FaBookOpen,
-  "Marketing": FaBullhorn,
-  "Development": FaCode,
+  DevOpsエンジニア: FaServer,
+  セキュリティエンジニア: FaServer,
+  QAエンジニア: FaBookOpen,
+  Marketing: FaBullhorn,
+  Development: FaCode,
   "Data Science": FaChartBar,
-  "Design": FaPalette,
-  "Sales": FaBullhorn,
-  "Education": FaBookOpen,
+  Design: FaPalette,
+  Sales: FaBullhorn,
+  Education: FaBookOpen,
   "IT & Networking": FaServer,
   "Mobile App": FaMobileAlt,
 };
 
 export default function Category() {
   // APIから職種データを取得
-  const { data: positions, isLoading, error } = useQuery({
+  const {
+    data: positions,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["positions"],
     queryFn: apiClient.getAllPositions,
   });
@@ -89,8 +101,8 @@ export default function Category() {
   // ポジションごとの求人数をカウント
   const getPositionCount = (positionId: number) => {
     if (!jobs) return 0;
-    return jobs.filter(job => 
-      job.positions.some(pos => pos.id === positionId)
+    return jobs.filter((job) =>
+      job.positions.some((pos) => pos.id === positionId)
     ).length;
   };
 
@@ -98,7 +110,9 @@ export default function Category() {
   if (error) {
     return (
       <Box py={10} px={4} textAlign="center">
-        <Text color="red.500">エラーが発生しました: {(error as Error).message}</Text>
+        <Text color="red.500">
+          エラーが発生しました: {(error as Error).message}
+        </Text>
       </Box>
     );
   }
@@ -134,14 +148,16 @@ export default function Category() {
   const categories = positions.map((position: Position) => ({
     icon: positionIconMap[position.name] || FaBriefcase,
     title: position.name,
-    count: getPositionCount(position.id)
+    count: getPositionCount(position.id),
   }));
 
   return renderCategorySection(categories);
 }
 
 // カテゴリセクションのレンダリング
-function renderCategorySection(categories: { icon: React.ElementType; title: string; count: number }[]) {
+function renderCategorySection(
+  categories: { icon: React.ElementType; title: string; count: number }[]
+) {
   return (
     <Box py={10} px={4}>
       <Box textAlign="center" mb={10}>

@@ -17,11 +17,11 @@ export function Header() {
             justifyContent="center"
           >
             <Text fontSize="xl" fontWeight="bold" color="white">
-              H
+              G
             </Text>
           </Box>
           <Text fontSize="xl" fontWeight="bold" color="#0E0359">
-            HowTV
+            GlobalWorkVenture
           </Text>
         </Flex>
       </Box>

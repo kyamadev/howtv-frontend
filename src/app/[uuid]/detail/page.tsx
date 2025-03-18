@@ -8,32 +8,46 @@ interface Message {
 }
 
 const SkillsPage = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
+  // テスト用の会話データ：Bot の質問を２回用意
+  const botQuestions = [
+    "What are your greatest strengths?",
+    "Can you describe a challenging situation you've faced?",
+  ];
+
+  // 初回は最初の質問を表示
+  const [conversationIndex, setConversationIndex] = useState(0);
+  const [messages, setMessages] = useState<Message[]>([
+    { text: botQuestions[0], sender: "bot" },
+  ]);
   const [input, setInput] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
 
-    // ユーザーからのメッセージ（右寄せ）
+    // ユーザー回答を追加
     const userMessage: Message = { text: input, sender: "user" };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
 
-    // 擬似的なボットからのレスポンス（0.5秒後に左寄せ）
-    setTimeout(() => {
-      const botMessage: Message = {
-        text: `Botのレスポンス: ${userMessage.text}`,
-        sender: "bot",
-      };
-      setMessages((prev) => [...prev, botMessage]);
-    }, 500);
+    // もしまだ残っている質問があれば次の質問を自動追加
+    if (conversationIndex < botQuestions.length - 1) {
+      const nextIndex = conversationIndex + 1;
+      setConversationIndex(nextIndex);
+      setTimeout(() => {
+        const botMessage: Message = {
+          text: botQuestions[nextIndex],
+          sender: "bot",
+        };
+        setMessages((prev) => [...prev, botMessage]);
+      }, 500);
+    }
   };
 
   return (
     <Box p={4}>
       <Heading as="h2" mb={4}>
-        ロードマップの詳細
+        英語面接の練習
       </Heading>
       <Box
         border="1px solid"

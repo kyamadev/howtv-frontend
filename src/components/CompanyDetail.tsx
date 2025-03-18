@@ -1,6 +1,15 @@
 "use client";
 import React from "react";
-import { Box, Heading, Text, Stack, Button, Spinner, Alert, AlertIcon } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  Text,
+  Stack,
+  Button,
+  Spinner,
+  Alert,
+  AlertIcon,
+} from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { apiClient, Company } from "@/lib/api";
 
@@ -9,9 +18,16 @@ interface CompanyDetailProps {
   companyId?: number;
 }
 
-export default function CompanyDetail({ company, companyId }: CompanyDetailProps) {
+export default function CompanyDetail({
+  company,
+  companyId,
+}: CompanyDetailProps) {
   // 会社情報がプロップスで渡されていない場合のみAPIから取得
-  const { data: fetchedCompany, isLoading, error } = useQuery({
+  const {
+    data: fetchedCompany,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["company", companyId],
     queryFn: () => apiClient.getCompany(companyId as number),
     enabled: !company && !!companyId, // companyが渡されている場合はAPIを呼ばない
@@ -60,7 +76,8 @@ export default function CompanyDetail({ company, companyId }: CompanyDetailProps
           {displayCompany.name}
         </Text>
         <Text fontSize="sm">
-          <strong>会社概要:</strong> {displayCompany.description || "詳細情報はありません"}
+          <strong>会社概要:</strong>{" "}
+          {displayCompany.description || "詳細情報はありません"}
         </Text>
         <Text fontSize="sm">
           <strong>設立:</strong> {displayCompany.founded_year || "未登録"}
@@ -75,9 +92,14 @@ export default function CompanyDetail({ company, companyId }: CompanyDetailProps
           <strong>住所:</strong> {displayCompany.address || "未登録"}
         </Text>
         <Text fontSize="sm">
-          <strong>Webサイト:</strong> {" "}
+          <strong>Webサイト:</strong>{" "}
           {displayCompany.website ? (
-            <a href={displayCompany.website} target="_blank" rel="noopener noreferrer" style={{ color: 'blue', textDecoration: 'underline' }}>
+            <a
+              href={displayCompany.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "blue", textDecoration: "underline" }}
+            >
               {displayCompany.website}
             </a>
           ) : (
@@ -86,7 +108,7 @@ export default function CompanyDetail({ company, companyId }: CompanyDetailProps
         </Text>
       </Stack>
       <Box mt={6} textAlign="center">
-        <Button colorScheme="blue" size="lg">
+        <Button bg="#ff4500" color="white" size="lg" _hover={{ bg: "#e03d00" }}>
           応募する
         </Button>
       </Box>

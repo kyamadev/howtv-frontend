@@ -35,31 +35,38 @@ const JobCard = ({ job }: { job: JobPosting }) => {
       <Heading as="h3" size="md" mb={2} noOfLines={2}>
         {job.title}
       </Heading>
-      
+
       <Text fontSize="sm" color="gray.500" mb={3}>
         {job.location} • {job.employment_type}
       </Text>
-      
+
       <Text noOfLines={3} mb={4} fontSize="sm">
         {job.description}
       </Text>
-      
+
       <Flex gap={2} mb={4} flexWrap="wrap">
         {job.positions.map((position) => (
-          <Badge key={position.id} colorScheme="purple" borderRadius="full" px={2}>
+          <Badge
+            key={position.id}
+            colorScheme="purple"
+            borderRadius="full"
+            px={2}
+          >
             {position.name}
           </Badge>
         ))}
       </Flex>
-      
+
       <Text fontSize="sm" fontWeight="bold" mb={4}>
         {job.salary_range}
       </Text>
-      
+
       <Button
-        colorScheme="blue"
+        bg="#ff4500"
+        color="white"
         size="sm"
         width="100%"
+        _hover={{ bg: "#e03d00" }}
         onClick={() => router.push(`/${job.uuid}`)}
       >
         詳細を見る
@@ -69,7 +76,11 @@ const JobCard = ({ job }: { job: JobPosting }) => {
 };
 
 export default function JobList() {
-  const { data: jobs, isLoading, error } = useQuery({
+  const {
+    data: jobs,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["jobs"],
     queryFn: () => apiClient.getAllJobs(),
   });
@@ -85,7 +96,9 @@ export default function JobList() {
   if (error) {
     return (
       <Box py={10} px={4} textAlign="center">
-        <Text color="red.500">エラーが発生しました: {(error as Error).message}</Text>
+        <Text color="red.500">
+          エラーが発生しました: {(error as Error).message}
+        </Text>
       </Box>
     );
   }
@@ -119,7 +132,12 @@ export default function JobList() {
         </Text>
       </Box>
 
-      <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={8} maxW="1200px" mx="auto">
+      <SimpleGrid
+        columns={{ base: 1, md: 2, lg: 3 }}
+        spacing={8}
+        maxW="1200px"
+        mx="auto"
+      >
         {jobs.map((job) => (
           <JobCard key={job.uuid} job={job} />
         ))}

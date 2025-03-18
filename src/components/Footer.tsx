@@ -105,7 +105,7 @@ export default function Footer() {
                 color="#ff4500" // オレンジに近い赤
                 letterSpacing="-0.5px"
               >
-                HowTV
+                GlobalWorkVenture
               </Text>
             </Box>
             <Text fontSize="sm" color="gray.600" lineHeight="taller" maxW="sm">

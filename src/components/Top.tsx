@@ -66,7 +66,7 @@ export default function Top() {
               color="#3D589B"
               textAlign={{ base: "center", lg: "left" }}
             >
-              HowTVは、あなたの経験とスキルに合った最適な求人情報を提供します。
+              GlobalWorkVentureは、あなたの経験とスキルに合った最適な求人情報を提供します。
               新たなキャリアへの第一歩を踏み出しましょう。
             </Text>
 

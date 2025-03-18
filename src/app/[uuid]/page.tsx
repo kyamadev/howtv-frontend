@@ -3,7 +3,6 @@ import React from "react";
 import { Flex, Box, Heading, Spinner, Text, Center } from "@chakra-ui/react";
 import CompanyDetail from "@/components/CompanyDetail";
 import Roadmap from "@/components/Roadmap";
-import Footer from "@/components/Footer";
 import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { apiClient } from "@/lib/api";
