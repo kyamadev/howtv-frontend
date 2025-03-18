@@ -12,35 +12,34 @@ const JobDetailPage: React.FC = () => {
   const jobUuid = params.uuid as string;
 
   // 求人情報を取得
-  const { 
-    data: job, 
-    isLoading: isJobLoading, 
-    error: jobError 
+  const {
+    data: job,
+    isLoading: isJobLoading,
+    error: jobError,
   } = useQuery({
     queryKey: ["job", jobUuid],
-    queryFn: () => apiClient.getJob(jobUuid, true), // includeCompany=true を指定
+    queryFn: () => apiClient.getJob(jobUuid, true),
     enabled: !!jobUuid,
   });
 
-  // ローディング表示
   if (isJobLoading) {
     return (
       <Center h="100vh">
-        <Spinner size="xl" color="#7B66FF" thickness="4px" />
+        <Spinner size="xl" color="red.400" thickness="4px" />
       </Center>
     );
   }
 
-  // エラー表示
   if (jobError) {
     return (
       <Center h="100vh">
-        <Text color="red.500">エラーが発生しました: {(jobError as Error).message}</Text>
+        <Text color="red.500">
+          エラーが発生しました: {(jobError as Error).message}
+        </Text>
       </Center>
     );
   }
 
-  // データがない場合
   if (!job) {
     return (
       <Center h="100vh">
@@ -50,44 +49,62 @@ const JobDetailPage: React.FC = () => {
   }
 
   return (
-    <Flex height="100vh">
-      <Box flex="1" borderRight="1px solid #ccc" p="1rem">
-        <Heading as="h2" size="md" mb="4">
-          キャリアロードマップ
-        </Heading>
-        <Box>
+    <Flex direction="column" minHeight="100vh" bg="gray.50">
+      {/* メインコンテンツ */}
+      <Flex flex="1" px={{ base: 4, md: 8 }} py={{ base: 6, md: 10 }}>
+        <Box
+          flex="1"
+          pr={{ base: 0, md: 4 }}
+          borderRight={{ base: "none", md: "1px solid" }}
+          borderColor="gray.200"
+          mb={{ base: 6, md: 0 }}
+        >
           <Roadmap jobId={jobUuid} />
         </Box>
-      </Box>
-      <Box flex="2" p="1rem">
-        <Heading as="h2" size="md" mb="4">
-          求人詳細
-        </Heading>
-        <Box mb="6">
-          <Heading as="h1" size="lg" mb="2">
-            {job.title}
+        <Box
+          flex="2"
+          pl={{ base: 0, md: 4 }}
+          bg="white"
+          borderRadius="lg"
+          p={6}
+          boxShadow="md"
+        >
+          <Heading as="h2" size="lg" mb={4} color="red.500">
+            求人詳細
           </Heading>
-          <Text fontSize="md" mb="4">
-            <strong>勤務地:</strong> {job.location} | <strong>雇用形態:</strong> {job.employment_type}
-          </Text>
-          <Text fontSize="md" mb="4">
-            <strong>給与:</strong> {job.salary_range}
-          </Text>
-          <Text fontWeight="bold" mb="2">職種:</Text>
-          <Text mb="4">
-            {job.positions.map(pos => pos.name).join(', ')}
-          </Text>
-          <Text fontWeight="bold" mb="2">職務内容:</Text>
-          <Text mb="4" whiteSpace="pre-line">
-            {job.description}
-          </Text>
-          <Text fontWeight="bold" mb="2">応募要件:</Text>
-          <Text mb="4" whiteSpace="pre-line">
-            {job.requirements}
-          </Text>
+          <Box mb={6}>
+            <Heading as="h1" size="xl" mb={2} color="gray.800">
+              {job.title}
+            </Heading>
+            <Text fontSize="md" mb={4} color="gray.600">
+              <strong>勤務地:</strong> {job.location} |{" "}
+              <strong>雇用形態:</strong> {job.employment_type}
+            </Text>
+            <Text fontSize="md" mb={4} color="gray.600">
+              <strong>給与:</strong> {job.salary_range}
+            </Text>
+            <Text fontWeight="bold" mb={2} color="gray.800">
+              職種:
+            </Text>
+            <Text mb={4} color="gray.600">
+              {job.positions.map((pos) => pos.name).join(", ")}
+            </Text>
+            <Text fontWeight="bold" mb={2} color="gray.800">
+              職務内容:
+            </Text>
+            <Text mb={4} whiteSpace="pre-line" color="gray.600">
+              {job.description}
+            </Text>
+            <Text fontWeight="bold" mb={2} color="gray.800">
+              応募要件:
+            </Text>
+            <Text mb={4} whiteSpace="pre-line" color="gray.600">
+              {job.requirements}
+            </Text>
+            <CompanyDetail company={job.company} />
+          </Box>
         </Box>
-        <CompanyDetail company={job.company} />
-      </Box>
+      </Flex>
     </Flex>
   );
 };
