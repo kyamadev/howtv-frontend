@@ -11,7 +11,6 @@ export default function Home() {
       <Top />
       <Category />
       <JobList />
-      <Footer />
     </Box>
   );
 }

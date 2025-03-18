@@ -32,9 +32,6 @@ export default function Top() {
       py={12}
     >
       <Container maxW="1200px">
-        {/* ナビゲーション */}
-        <Header />
-
         {/* メインコンテンツ */}
         <Flex
           direction={{ base: "column", lg: "row" }}
