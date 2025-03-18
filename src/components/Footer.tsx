@@ -102,7 +102,7 @@ export default function Footer() {
               <Text
                 fontSize="2xl"
                 fontWeight="bold"
-                color="#0B2B82"
+                color="#ff4500" // オレンジに近い赤
                 letterSpacing="-0.5px"
               >
                 HowTV
