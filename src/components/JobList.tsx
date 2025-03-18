@@ -44,7 +44,7 @@ const JobCard = ({ job }: { job: JobPosting }) => {
         {job.description}
       </Text>
 
-      <Flex gap={2} mb={4} flexWrap="wrap">
+      {/* <Flex gap={2} mb={4} flexWrap="wrap">
         {job.positions.map((position) => (
           <Badge
             key={position.id}
@@ -55,7 +55,7 @@ const JobCard = ({ job }: { job: JobPosting }) => {
             {position.name}
           </Badge>
         ))}
-      </Flex>
+      </Flex> */}
 
       <Text fontSize="sm" fontWeight="bold" mb={4}>
         {job.salary_range}
